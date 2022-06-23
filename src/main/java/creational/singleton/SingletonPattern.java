@@ -3,9 +3,13 @@ package creational.singleton;
 public class SingletonPattern {
     public static void main(String[] args) {
         MyDataSource instance1 = MyDataSource.getInstance();
-        MyDataSource instance2 = MyDataSource.getInstance();
+        MyDataSource threadSafeInstance = MyDataSource.getThreadSafeInstance();
 
-        System.out.println("instance1 = " + instance1);
-        System.out.println("instance2 = " + instance2);
+        /* This approach is the most efficient of all since the dataSource object will be initialized as
+        soon as the static block is executed, now it doesn't matter how many threads are calling
+        */
+        MyDataSource instanceViaStaticBlock = MyDataSource.getInstanceViaStaticBlock();
+
+        MyDataSource instanceViaStaticClass = MyDataSource.getInstanceViaStaticClass();
     }
 }
