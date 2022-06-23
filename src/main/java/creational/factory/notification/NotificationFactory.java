@@ -1,4 +1,4 @@
-package creational.factory;
+package creational.factory.notification;
 
 public abstract class NotificationFactory {
 

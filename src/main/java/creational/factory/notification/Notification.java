@@ -1,4 +1,4 @@
-package creational.factory;
+package creational.factory.notification;
 
 public interface Notification {
     // For ex. Email, SMS, Push notification.
