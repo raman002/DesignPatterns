@@ -1,11 +1,42 @@
 package creational.singleton;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class MyDataSource {
     private static MyDataSource dataSource;
+    private static final Connection connection;
 
+    // Creating JDBC's Connection object as threadsafe singleton could be the best example here.
     static {
         dataSource = new MyDataSource();
+
+        try {
+            // register the mysql jdbc driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String url = "";
+            String username = "";
+            String password = "";
+
+            connection = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    /**
+     * This method will return a threadsafe singleton connection object
+     * since it's been initialized the static block which will be executed first
+     * and only once.
+     *
+     * @return A threadsafe singleton connection object
+     */
+    public static Connection getConnection() {
+        return connection;
+    }
+
     private MyDataSource() {}
 
     public static MyDataSource getInstanceViaStaticBlock() {
