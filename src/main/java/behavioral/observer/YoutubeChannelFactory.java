@@ -7,7 +7,7 @@ public final class YoutubeChannelFactory {
 
     public static Channel createChannel(String name, String description) {
         final Channel channel = new Channel(name, description);
-        System.out.println("channel = " + channel.hashCode());
+        System.out.println("channel = " + channel.getName());
         CHANNEL_MAP.putIfAbsent(name, channel);
         return channel;
     }
@@ -17,6 +17,7 @@ public final class YoutubeChannelFactory {
         private final String name;
         private final String description;
         private final Set<Content> contentList = new HashSet<>();
+        private final Set<Subscriber> subscriberList = new HashSet<>();
 
         private Channel(String name, String description) {
             this.name = name;
@@ -31,12 +32,21 @@ public final class YoutubeChannelFactory {
             return this.description;
         }
 
-        public boolean uploadContent(final Content content) {
-           return this.contentList.add(content);
+        public void uploadContent(final Content content) {
+           this.contentList.add(content);
+           notifySubscribers(content);
+        }
+
+        public void addSubscriber(Subscriber subscriber) {
+            this.subscriberList.add(subscriber);
         }
 
         public Set<Content> getContent() {
             return Collections.unmodifiableSet(this.contentList);
+        }
+
+        private void notifySubscribers(Content content) {
+            this.subscriberList.forEach(subscriber -> subscriber.newContentAvailable(content));
         }
     }
 }

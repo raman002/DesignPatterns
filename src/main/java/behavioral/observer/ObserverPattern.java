@@ -6,14 +6,19 @@ public class ObserverPattern {
                 This channel provides latest updates on the 
                 intellij products!""");
 
+        intellijNewsChannel.addSubscriber(new Subscriber1("john"));
+        intellijNewsChannel.addSubscriber(new Subscriber2("johny"));
+
         intellijNewsChannel.uploadContent(new Content("IntellijIDEA news", """
                 The newer versions has performance updates!"""));
 
-        intellijNewsChannel.uploadContent(new Content("IntellijIDEA setting up in windows", """
-                The new version of intellij idea is available!"""));
+        YoutubeChannelFactory.Channel stsChannel = YoutubeChannelFactory.createChannel("STS", "open source IDE channel");
 
-        intellijNewsChannel.getContent().forEach(content -> {
-            System.out.println("content.hashCode() = " + content.hashCode());
-        });
+        stsChannel.addSubscriber(new Subscriber3("pivotal"));
+
+        stsChannel.uploadContent(new Content("STS cloud upload", """
+                this channel produces content on pivotal sts cloud platform"""));
+
+
     }
 }

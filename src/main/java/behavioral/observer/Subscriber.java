@@ -1,6 +1,6 @@
 package behavioral.observer;
 
-public interface Observer {
+public interface Subscriber {
 
     void newContentAvailable(Content content);
 }

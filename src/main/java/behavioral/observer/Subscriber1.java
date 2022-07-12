@@ -1,12 +1,16 @@
 package behavioral.observer;
 
-public class Subscriber1 implements Observer {
+public class Subscriber1 implements Subscriber {
 
     private String name;
 
+    public Subscriber1(String name) {
+        this.name = name;
+    }
+
     @Override
     public void newContentAvailable(Content content) {
-
+        System.out.println("Subscriber1: new content update: " + content);
     }
 
     @Override
