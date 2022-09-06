@@ -1,5 +1,7 @@
 package behavioral.observer;
 
+import java.util.Stack;
+
 public class Subscriber1 implements Subscriber {
 
     private String name;
@@ -27,4 +29,37 @@ public class Subscriber1 implements Subscriber {
     public int hashCode() {
         return name.hashCode();
     }
+
+    public static void main(String[] args) {
+        final String parenthesis = "({})";
+        System.out.println("isValid = " + isValid(parenthesis));
+    }
+
+    private static boolean isValid(String parenthesis) {
+        final char[] chars = parenthesis.toCharArray();
+        Stack<Character> stack = new Stack<>();
+
+        if (chars.length % 2 != 0 || chars[0] == '}' || chars[0] == ')') {
+            return false;
+        }
+
+        for (char elem : chars) {
+            if (elem == '(' || elem == '{') {
+                stack.push(elem);
+            } else {
+                final char top = stack.lastElement();
+
+                if (top == '(' && elem == ')' || (top == '{' && elem == '}')) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        System.out.println("stack.size() = " + stack.size());
+        return stack.isEmpty();
+    }
+
+
 }
