@@ -11,5 +11,8 @@ public class SingletonPattern {
         MyDataSource instanceViaStaticBlock = MyDataSource.getInstanceViaStaticBlock();
 
         MyDataSource instanceViaStaticClass = MyDataSource.getInstanceViaStaticClass();
+
+        final var myDataSource = EnumSingleton.MY_DATA_SOURCE;
+        System.out.println("Enum Singleton Datasource: " + myDataSource);
     }
 }

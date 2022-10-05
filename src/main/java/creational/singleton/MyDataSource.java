@@ -45,6 +45,7 @@ public class MyDataSource {
     /**
      * This a NON thread-safe method. Singletons should NOT be created this way in a
      * multithreaded environment.
+     * NOTE: This is an on-demand initialization technique
      */
     public static MyDataSource getInstance() {
         if (dataSource == null) {
@@ -57,16 +58,26 @@ public class MyDataSource {
 
     /* If multiple threads try to access the getInstance() method at once then make
     * the method as synchronized or write the instance creation logic inside
-    * synchronized block*/
+    * synchronized block
+    *
+    * NOTE: This is an on-demand initialization technique
+    * */
 
     public static MyDataSource getThreadSafeInstance() {
         /* This null check is to avoid the multiple execution of the synchronized block
         in case the singleton object is already initialized.
         */
         if (dataSource == null) {
+            /*Now, the interesting thing here is that when two threads enter inside this
+            "if" statement and one of threads acquires lock and initialized the dataSource
+            object, after that another thread that was waiting, entered the synchronized block
+            and initialized the dataSource object again. Hence, to avoid this we need to
+            have another null check inside the synchronized block as well.
+            * */
             synchronized (MyDataSource.class) {
                 /* This is the second null check to ensure that multiple threads
-                do not initialize this instance multiple times.
+                do not initialize this instance multiple times. This technique is also known
+                as double-checked locking.
                 */
                 if (dataSource == null) {
                     dataSource = new MyDataSource();
@@ -86,6 +97,7 @@ public class MyDataSource {
         */
 
     private static class MyDataSourceStatic {
+        /*This is called as early initialization technique*/
         public static final MyDataSource MY_DATA_SOURCE = new MyDataSource();
     }
 }
