@@ -8,7 +8,7 @@ public abstract class CoffeeTemplate {
     private int beans;
     private int flavor;
 
-    protected final void prepareCoffee() {
+    public final void prepareCoffee() {
         //int flavor = addWater() + addSugar() + addMilk();
         int flavor = this.water + this.sugar  + this.milk;
 

@@ -11,8 +11,4 @@ public class CoffeeLatte extends CoffeeTemplate {
     protected int addSugar() {
         return 2;
     }
-
-    public void prepareLatteCoffee() {
-       super.prepareCoffee();
-    }
 }
